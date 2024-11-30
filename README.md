@@ -1,5 +1,5 @@
-# Brute-Force Password-Hash Cracker
-This is an educational tool that will help you understand how password-crackers work.<br>
+# PassBreach
+This is an educational **Brute-Force Password-Hash Cracker** that will help you understand how password-crackers work.<br>
 This tool implements the Power Set algorithm, making it the most accurate password-cracker in the world.<br>
 
 ## Notes
@@ -12,7 +12,7 @@ This tool implements the Power Set algorithm, making it the most accurate passwo
 ## Some notes about passwords and password-crackers
 1. The entropy of a password increases with the length of the password and, in that vein, using more random characters and symbols, creates a stronger password because it requires more combinations to crack/guess.
     - This sounds like common-sense, because "1234" (4 characters) is obviously weaker that "12345678" (8 characters) - since it's shorter and requires less combinations to find, but this also applies to the contents of the password itself if passwords are the same length. 
-    - Due to how some other password-crackers are written: "1'[$" (4 characters) is more secure than its equivalent "1234" (4 characters), etc. (Note, however: For my app, both passwords are equally easy to crack)
+    - Due to how some other password-crackers are written: "1'[$" (4 characters) is more secure than its equivalent "1234" (4 characters), etc. (Note: For **PassBreach**, both passwords are equally weak)
 2. At some point, a password can become almost impossible to crack immediately ("immediately" is the keyword here) using a tool like this, because of current computing constraints and finite-memory,  <br>
     - Hackers would then require a "slower" approach, which sacrifices speed for memory/resources efficiency, <br>
     - Meaning that your password will STILL be vulnerable to reverse-engineering over a longer period of time, or when computers become more powerful (every 18 months - [Moore's Law](https://www.intel.com/content/www/us/en/newsroom/resources/moores-law.html)). <br>
