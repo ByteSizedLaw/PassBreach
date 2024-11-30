@@ -49,11 +49,9 @@ Time Complexity:
 Space Complexity:
 <li>𝑂(𝐶𝐿−1), where 𝐶 is the size of the character set and 𝐿 is the maximum password length.</li>
 <br>
-<br>
 Both the time and space complexities are exponential due to the nature of the algorithm. 
 <br>
 This is expected for an algorithm of this type, since we need to explore all possible combinations to guarantee finding the correct password.
-<br>
 <br>
 I've improved the efficiency of the algorithm as much as scientifically possible,
 <br>
@@ -63,15 +61,15 @@ But there's still a trade-off between accuracy and efficiency, and since my algo
 It translates to the following:
 <br>
 When I did performance testing, I found that an 8 letter password, with a character set of 9 characters, had the following results:
-<code> 
-Time Taken: 17683 ms, or 17 seconds
-Memory Usage: 2511 MB, or 2.5GB
+<br>
+<code>Time Taken: 17683 ms, or 17 seconds
+ Memory Usage: 2511 MB, or 2.5GB
 </code>
 <br>
 Since this is exponential, we can assume that an 8 letter password with a character set of 10 (1 character more than before), would take:
-<code>
-Estimated Time Taken: Approximately 33 seconds
-Estimated Memory Usage: Approximately 4.5 GB
+<br>
+<code>Estimated Time Taken: Approximately 33 seconds
+ Estimated Memory Usage: Approximately 4.5 GB
 </code>
 <br>
 The more characters there are in the set, the higher the resource consumption and processing time to calculate the original password.
