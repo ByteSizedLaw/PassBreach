@@ -1,0 +1,80 @@
+# PassBreach
+This is an educational **Brute-Force Password-Hash Cracker** that will help you understand how password-crackers work.<br>
+This tool implements the Power Set algorithm, making it the most accurate password-cracker in the world.<br>
+
+## How this version differs from my C# version:
+This version is built as a Java microservice. <br> 
+It uses the following technologies to build a scalable restAPI and microservice that performs the same functionality as the C# version of my [PassBreach](https://github.com/ByteSizedLaw/PassBreach) project:
+1. Spring Boot
+2. Spring Data JPA
+3. Spring H2 Database 
+4. Spring Data Web
+
+## Notes
+1. I do not endorse illegal activity of any kind. I also do not wish to enable anyone to perform illegal activity.
+2. This tool was designed strictly for educational purposes.
+3. You assume ALL liability when using this tool for illegal activity, or when converting this tool into a cyber-weapon of ANY kind.
+4. It is ILLEGAL to attempt to crack passwords or systems that you do not own.
+5. Computers have finite memory to work with, and this tool (because of the use-case and mathematical algorithm it implements) uses lots of RAM. Please monitor your PCs memory usage and keep the password length and character-set within a reasonable threshold for your PC
+
+## Some notes about passwords and password-crackers
+1. The entropy of a password increases with the length of the password and, in that vein, using more random characters and symbols, creates a stronger password because it requires more combinations to crack/guess.
+    - This sounds like common-sense, because "1234" (4 characters) is obviously weaker that "12345678" (8 characters) - since it's shorter and requires less combinations to find, but this also applies to the contents of the password itself if passwords are the same length. 
+    - Due to how some other password-crackers are written: "1'[$" (4 characters) is more secure than its equivalent "1234" (4 characters), etc. (Note: For **PassBreach**, both passwords are equally weak)
+2. At some point, a password can become almost impossible to crack immediately ("immediately" is the keyword here) using a tool like this, because of current computing constraints and finite-memory,  <br>
+    - Hackers would then require a "slower" approach, which sacrifices speed for memory/resources efficiency, <br>
+    - Meaning that your password will STILL be vulnerable to reverse-engineering over a longer period of time, or when computers become more powerful (every 18 months - [Moore's Law](https://www.intel.com/content/www/us/en/newsroom/resources/moores-law.html)). <br>
+
+### What you will come to understand from using this tool is:
+Having a long password (12 chars, for example) isn't Secure enough - if you're only using the same 5 characters to create that password. <br>
+For real-world passwords, you should use longer passwords with more random combinations of characters and symbols, to make it more difficult to reverse-engineer. <br>
+You should also avoid using the same passwords for different sites/systems. <br>
+
+## Currently supported Hashing algs (algorithms we can crack):
+1. MD5 (Deprecated because of vulnerabilities, but still in use in legacy systems)
+2. SHA-256 (Most common, since it's used by organizations and governments, worldwide, for its security)
+3. Will be adding more algorithms onto this later.
+
+## Some Additional Info on Hackers and Common Tactics:
+1. Hackers/"Malicious Actors"/"Threat actors" may sometimes manage to steal/compromise a database of stored password hashes. 
+    - Passwords are always stored as hashes (Which are impossible to reverse-engineer [without this tool] - because hashing is a one-way function).
+    - The attacker would then use a Cyber Weapon (like a Rainbow-table, etc.) to guess the original password that created the (stolen) password hash. These tools are not 100% accurate, and the attacker may never guess the correct password.
+2. Attackers could also use Cyber Weapons similar this, to send hundreds-of-thousands of login-attempts to a server, to "guess" your password and gain access to your information.
+    - This is why "Lockout counts" (Although annoying to us as users) are so important! They prevent hackers from logging into your accounts, by locking your accounts after a few failed login attempts
+
+
+## The Computer Science behind the algorithm:
+Time Complexity:
+<li>𝑂(𝐶𝐿), where 𝐶 is the size of the character set and 𝐿 is the maximum password length.</li>
+<br>
+Space Complexity:
+<li>𝑂(𝐶𝐿−1), where 𝐶 is the size of the character set and 𝐿 is the maximum password length.</li>
+<br>
+<br>
+Both the time and space complexities are exponential due to the nature of the algorithm. 
+<br>
+This is expected for an algorithm of this type, since we need to explore all possible combinations to guarantee finding the correct password.
+<br>
+<br>
+I've improved the efficiency of the algorithm as much as scientifically possible,
+<br>
+But there's still a trade-off between accuracy and efficiency, and since my algorithm is the most accurate, it's also by nature the least efficient.
+
+## What does the Time and Space complexity mean
+It translates to the following:
+<br>
+When I did performance testing, I found that an 8 letter password, with a character set of 9 characters, had the following results:
+<code> 
+Time Taken: 17683 ms, or 17 seconds
+Memory Usage: 2511 MB, or 2.5GB
+</code>
+<br>
+Since this is exponential, we can assume that an 8 letter password with a character set of 10 (1 character more than before), would take:
+<code>
+Estimated Time Taken: Approximately 33 seconds
+Estimated Memory Usage: Approximately 4.5 GB
+</code>
+<br>
+The more characters there are in the set, the higher the resource consumption and processing time to calculate the original password.
+<br>
+This logic is what underpins password security, since passwords that are longer AND have more variety in the characters used, are harder to crack.
