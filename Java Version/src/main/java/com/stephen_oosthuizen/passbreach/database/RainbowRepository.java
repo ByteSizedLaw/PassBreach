@@ -4,7 +4,9 @@
  */
 package com.stephen_oosthuizen.passbreach.database;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,4 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RainbowRepository extends JpaRepository<RainbowEntity, Long>{
     public RainbowEntity findByHash(String hash);
+    @Query("SELECT r FROM RainbowEntity r WHERE r.length = (SELECT MAX(r2.length) FROM RainbowEntity r2)")
+    List<RainbowEntity> findAllWithMaxLength();
 }

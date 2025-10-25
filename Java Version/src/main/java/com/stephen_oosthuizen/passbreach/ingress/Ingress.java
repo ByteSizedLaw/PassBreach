@@ -31,7 +31,7 @@ public class Ingress {
     public Ingress(){}
     
     ///Generates a password hash based on the chosen algorithm
-    @GetMapping("/generate_pword_hash")
+    @GetMapping("/generate_pword_hash") //our URL will be http://localhost/generate_pword_hash
     public String genPassword(String input, String algorithm){
         return genHash.generate(input, algorithm);
     }
@@ -39,7 +39,7 @@ public class Ingress {
     ///Reverse engineers the password hash - which should be impossible, but isn't
     /// @param upperLength is a customizable config to ensure that we don't exceed expected processing requirements
     /// this algorithm is very resource intensive
-    @GetMapping(value = "/reverse_engineer")
+    @GetMapping(value = "/reverse_engineer") //URL will be http://localhost/reverse_engineer
     public String reverseEngineer(String hash, int length) {
         return revEng.reverseEngineer(hash, length);
     }

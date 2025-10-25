@@ -4,6 +4,7 @@
  */
 package com.stephen_oosthuizen.passbreach.controllers;
 
+import com.stephen_oosthuizen.passbreach.database.RainbowEntity;
 import com.stephen_oosthuizen.passbreach.database.RainbowService;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ReverseEngineer {
-    public static String algorithm = "SHA-512"; //todo:
+    public static String algorithm = "SHA-512"; //todo: make this configurable
     public static String matchedPword = "";
     public static String userHash = "";
     public static int upperlength = 0;
@@ -33,7 +34,14 @@ public class ReverseEngineer {
     }
     public ReverseEngineer(){}
     
+    
+    public void resetMembers(){
+        matchedPword = "";
+        matched = false;
+        currentlength = 0;
+    }
     public String reverseEngineer(String hash, int upperLength){
+        resetMembers();
         userHash = hash;
         upperlength = upperLength;
         
@@ -41,7 +49,18 @@ public class ReverseEngineer {
             return matchedPword;
         }
         
-        if(calculate(GenerateCombinations.seed()) || matched){
+        List<String> recentDbElements = getRecentSavedElements();
+        System.out.println("[DEBUG] Finished searching DB");
+        
+        if(recentDbElements == null || recentDbElements.isEmpty()){
+            System.out.println("[DEBUG] Trying to seed a new list because no entries were found");
+            recentDbElements = GenerateCombinations.seed();
+            handleCombinations(recentDbElements); // just a quick check if the initial seed list contains the value we're looking for
+        }
+        
+        System.out.println("[DEBUG] Trying to Calculate the password");
+        System.out.println("[DEBUG] First element: " + recentDbElements.get(0));
+        if(calculate(recentDbElements) || matched){
             return matchedPword;
         }
         return "";
@@ -69,9 +88,13 @@ public class ReverseEngineer {
         for(String s : list){
             String res = hasher.generate(s, algorithm);
             
-            //Save this combination into our database for future lookups to be faster
-            saveToDB(s, res);
-            
+            try{
+                //Save this combination into our database for future lookups to be faster
+                saveToDB(s, res);
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
             if(res.equals(userHash)){
                 matchedPword = s;
                 matched = true;
@@ -91,5 +114,9 @@ public class ReverseEngineer {
         }
         return false;
     }
-
+    
+    private List<String> getRecentSavedElements(){
+        List<String> result = service.getEntitiesWithMaxLength();
+        return result;
+    }
 }
